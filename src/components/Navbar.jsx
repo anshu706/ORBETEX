@@ -4,12 +4,9 @@ import OrbetexLogo from './OrbetexLogo';
 import styles from './Navbar.module.css';
 
 const NAV_LINKS = [
-  { to: '/research',     label: 'Research'     },
-  { to: '/publications', label: 'Publications' },
-  { to: '/projects',     label: 'Projects'     },
-  { to: '/cv',           label: 'CV'           },
-  { to: '/about',        label: 'About'         },
-  { to: '/contact',      label: 'Contact'      },
+  { to: '/research', label: 'Research' },
+  { to: '/about',    label: 'About'    },
+  { to: '/contact',  label: 'Contact'  },
 ];
 
 export default function Navbar() {

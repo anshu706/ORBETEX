@@ -1,7 +1,5 @@
-// ============================================================
 // Orbetex Research Notes — Site Configuration
-// Personal research hub publishing papers, projects, notes, and findings
-// ============================================================
+// Personal research hub publishing research notes and scientific findings
 
 export const siteConfig = {
   // Brand
@@ -42,5 +40,5 @@ export const siteConfig = {
   // Site metadata
   siteUrl: "https://anshu706.github.io/Orbetex",
   description:
-    "Personal research hub publishing scientific notes, publications, interactive prototypes, and findings in ML, NLP, and cognitive systems.",
+    "Personal research hub publishing scientific notes, interactive prototypes, and findings in ML, NLP, and cognitive systems.",
 };

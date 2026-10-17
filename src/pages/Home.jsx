@@ -1,20 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { siteConfig } from '../config/site.config';
 import { researchNotes } from '../data/researchNotes';
-import { publications } from '../data/publications';
 import StatusBadge from '../components/StatusBadge';
 import TagChip from '../components/TagChip';
-import BibtexModal from '../components/BibtexModal';
 import styles from './Home.module.css';
 
 export default function Home() {
-  const [selectedBibtex, setSelectedBibtex] = useState(null);
-
   // Take top items
   const featuredNotes = researchNotes.slice(0, 3);
-  const featuredPubs = publications.slice(0, 3);
 
   return (
     <div className="page-wrapper">
@@ -55,8 +50,8 @@ export default function Home() {
             <Link to="/research" className={styles.primaryAction}>
               Explore Research Notes →
             </Link>
-            <Link to="/publications" className={styles.secondaryAction}>
-              Browse Publications →
+            <Link to="/about" className={styles.secondaryAction}>
+              About the Lab →
             </Link>
           </div>
 
@@ -67,8 +62,8 @@ export default function Home() {
               <span className={styles.metricLabel}>Active Research Notes</span>
             </div>
             <div className={styles.metricCard}>
-              <span className={styles.metricNumber}>{publications.length}</span>
-              <span className={styles.metricLabel}>Published Papers</span>
+              <span className={styles.metricNumber}>{siteConfig.researchInterests.length}</span>
+              <span className={styles.metricLabel}>Investigative Pillars</span>
             </div>
             <div className={styles.metricCard}>
               <span className={styles.metricNumber}>100%</span>
@@ -126,80 +121,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ── Selected Publications (renders when publications exist) ── */}
-      {publications.length > 0 && (
-        <section className={`${styles.section} ${styles.altSection}`}>
-          <div className="container">
-            <div className={styles.sectionHeader}>
-              <div>
-                <span className={styles.sectionPre}>Peer-Reviewed &amp; Preprints</span>
-                <h2 className={styles.sectionTitle}>Selected Publications</h2>
-              </div>
-              <Link to="/publications" className={styles.sectionLink}>
-                All publications →
-              </Link>
-            </div>
-
-            <div className={styles.pubsList}>
-              {featuredPubs.map(pub => (
-                <article key={pub.id} className={styles.pubItem}>
-                  <div className={styles.pubYear}>{pub.year}</div>
-                  <div className={styles.pubContent}>
-                    <div className={styles.pubVenueBadge}>
-                      <span>{pub.venue}</span>
-                      <span className={styles.pubType}>{pub.type}</span>
-                    </div>
-                    <h3 className={styles.pubTitle}>{pub.title}</h3>
-                    <p className={styles.pubAuthors}>
-                      {pub.authors.map((author, i) => (
-                        <span key={author} className={author.includes('Anshu Upadhyay') ? styles.highlightAuthor : ''}>
-                          {author}{i < pub.authors.length - 1 ? ', ' : ''}
-                        </span>
-                      ))}
-                    </p>
-                    <p className={styles.pubAbstract}>{pub.abstract.slice(0, 240)}...</p>
-
-                    <div className={styles.pubActions}>
-                      {pub.arxiv && (
-                        <a href={pub.arxiv} target="_blank" rel="noopener noreferrer" className={styles.pubLink}>
-                          arXiv
-                        </a>
-                      )}
-                      {pub.code && (
-                        <a href={pub.code} target="_blank" rel="noopener noreferrer" className={styles.pubLink}>
-                          Code Repository
-                        </a>
-                      )}
-                      <button
-                        className={styles.citeBtn}
-                        onClick={() => setSelectedBibtex({ title: pub.title, bibtex: pub.bibtex })}
-                      >
-                        Cite (BibTeX)
-                      </button>
-                      {pub.citations > 0 && (
-                        <span className={styles.citationsBadge}>
-                          {pub.citations} citations
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Citation Modal */}
-      {selectedBibtex && (
-        <BibtexModal
-          isOpen={true}
-          onClose={() => setSelectedBibtex(null)}
-          title={selectedBibtex.title}
-          bibtex={selectedBibtex.bibtex}
-        />
-      )}
     </div>
   );
 }

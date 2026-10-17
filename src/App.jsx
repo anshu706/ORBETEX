@@ -9,9 +9,6 @@ import ScrollToTop from './components/ScrollToTop';
 const Home = lazy(() => import('./pages/Home'));
 const Research = lazy(() => import('./pages/Research'));
 const ResearchDetail = lazy(() => import('./pages/ResearchDetail'));
-const Publications = lazy(() => import('./pages/Publications'));
-const Projects = lazy(() => import('./pages/Projects'));
-const CV = lazy(() => import('./pages/CV'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const NotFound = lazy(() => import('./pages/NotFound'));
@@ -49,9 +46,6 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/research" element={<Research />} />
               <Route path="/research/:slug" element={<ResearchDetail />} />
-              <Route path="/publications" element={<Publications />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/cv" element={<CV />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
