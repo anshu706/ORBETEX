@@ -4,9 +4,10 @@ import { Helmet } from 'react-helmet-async';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import rehypeRaw from 'rehype-raw';
 import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
-import { researchNotes } from '../data/researchNotes';
+import { getAllNotes } from '../data/notesManager';
 import { siteConfig } from '../config/site.config';
 import StatusBadge from '../components/StatusBadge';
 import TagChip from '../components/TagChip';
@@ -18,13 +19,20 @@ export default function ResearchDetail() {
   const [readingProgress, setReadingProgress] = useState(0);
   const [showBibtex, setShowBibtex] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [notesList, setNotesList] = useState(() => getAllNotes());
 
-  const noteIndex = researchNotes.findIndex(n => n.slug === slug || n.id === slug);
-  const note = researchNotes[noteIndex];
+  useEffect(() => {
+    const refreshNotes = () => setNotesList(getAllNotes());
+    window.addEventListener('orbetex_notes_updated', refreshNotes);
+    return () => window.removeEventListener('orbetex_notes_updated', refreshNotes);
+  }, []);
+
+  const noteIndex = notesList.findIndex(n => n.slug === slug || n.id === slug);
+  const note = notesList[noteIndex];
 
   // Next / Previous notes
-  const prevNote = noteIndex > 0 ? researchNotes[noteIndex - 1] : null;
-  const nextNote = noteIndex < researchNotes.length - 1 ? researchNotes[noteIndex + 1] : null;
+  const prevNote = noteIndex > 0 ? notesList[noteIndex - 1] : null;
+  const nextNote = noteIndex >= 0 && noteIndex < notesList.length - 1 ? notesList[noteIndex + 1] : null;
 
   // Track scroll progress
   useEffect(() => {
@@ -155,7 +163,7 @@ export default function ResearchDetail() {
             <div className={styles.markdownBody}>
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex, rehypeHighlight]}
+                rehypePlugins={[rehypeRaw, rehypeKatex, rehypeHighlight]}
                 components={{
                   h2: ({ children, ...props }) => {
                     const text = React.Children.toArray(children)
@@ -170,6 +178,50 @@ export default function ResearchDetail() {
                       .join('');
                     const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
                     return <h3 id={id} {...props}>{children}</h3>;
+                  },
+                  img: ({ src, alt, title }) => {
+                    const isVideo = src && /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(src);
+                    const isYouTube = src && (src.includes('youtube.com') || src.includes('youtu.be'));
+
+                    if (isVideo) {
+                      return (
+                        <figure className={styles.mediaFigure}>
+                          <video src={src} controls className={styles.embeddedVideo} poster={title}>
+                            Your browser does not support the video tag.
+                          </video>
+                          {alt && <figcaption className={styles.mediaCaption}>{alt}</figcaption>}
+                        </figure>
+                      );
+                    }
+
+                    if (isYouTube) {
+                      let embedUrl = src;
+                      if (src.includes('watch?v=')) {
+                        embedUrl = src.replace('watch?v=', 'embed/');
+                      } else if (src.includes('youtu.be/')) {
+                        embedUrl = src.replace('youtu.be/', 'www.youtube.com/embed/');
+                      }
+                      return (
+                        <figure className={styles.mediaFigure}>
+                          <div className={styles.videoEmbedWrapper}>
+                            <iframe
+                              src={embedUrl}
+                              title={alt || 'Embedded video'}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </div>
+                          {alt && <figcaption className={styles.mediaCaption}>{alt}</figcaption>}
+                        </figure>
+                      );
+                    }
+
+                    return (
+                      <figure className={styles.mediaFigure}>
+                        <img src={src} alt={alt || 'Research figure'} className={styles.embeddedImage} loading="lazy" />
+                        {alt && <figcaption className={styles.mediaCaption}>{alt}</figcaption>}
+                      </figure>
+                    );
                   }
                 }}
               >

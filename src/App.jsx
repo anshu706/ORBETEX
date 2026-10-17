@@ -9,8 +9,8 @@ import ScrollToTop from './components/ScrollToTop';
 const Home = lazy(() => import('./pages/Home'));
 const Research = lazy(() => import('./pages/Research'));
 const ResearchDetail = lazy(() => import('./pages/ResearchDetail'));
+const NewResearchNote = lazy(() => import('./pages/NewResearchNote'));
 const About = lazy(() => import('./pages/About'));
-const Contact = lazy(() => import('./pages/Contact'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 const PageFallback = () => (
@@ -45,9 +45,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/research" element={<Research />} />
+              <Route path="/research/new" element={<NewResearchNote />} />
               <Route path="/research/:slug" element={<ResearchDetail />} />
               <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

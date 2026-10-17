@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { siteConfig } from '../config/site.config';
-import { researchNotes } from '../data/researchNotes';
+import { getAllNotes } from '../data/notesManager';
 import StatusBadge from '../components/StatusBadge';
 import TagChip from '../components/TagChip';
 import styles from './Home.module.css';
 
 export default function Home() {
+  const [allNotes, setAllNotes] = useState(() => getAllNotes());
+
+  useEffect(() => {
+    const refresh = () => setAllNotes(getAllNotes());
+    window.addEventListener('orbetex_notes_updated', refresh);
+    return () => window.removeEventListener('orbetex_notes_updated', refresh);
+  }, []);
+
   // Take top items
-  const featuredNotes = researchNotes.slice(0, 3);
+  const featuredNotes = allNotes.slice(0, 3);
 
   return (
     <div className="page-wrapper">
@@ -58,7 +66,7 @@ export default function Home() {
           {/* Metric counter highlights */}
           <div className={styles.metricsGrid}>
             <div className={styles.metricCard}>
-              <span className={styles.metricNumber}>{researchNotes.length}</span>
+              <span className={styles.metricNumber}>{allNotes.length}</span>
               <span className={styles.metricLabel}>Active Research Notes</span>
             </div>
             <div className={styles.metricCard}>
@@ -82,7 +90,7 @@ export default function Home() {
               <h2 className={styles.sectionTitle}>Featured Research Notes</h2>
             </div>
             <Link to="/research" className={styles.sectionLink}>
-              View all notes ({researchNotes.length}) →
+              View all notes ({allNotes.length}) →
             </Link>
           </div>
 

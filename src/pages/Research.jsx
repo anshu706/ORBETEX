@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { researchNotes } from '../data/researchNotes';
+import { getAllNotes } from '../data/notesManager';
 import { siteConfig } from '../config/site.config';
 import StatusBadge from '../components/StatusBadge';
 import TagChip from '../components/TagChip';
@@ -10,6 +10,13 @@ import styles from './Research.module.css';
 export default function Research() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
+  const [notesList, setNotesList] = useState(() => getAllNotes());
+
+  useEffect(() => {
+    const refreshNotes = () => setNotesList(getAllNotes());
+    window.addEventListener('orbetex_notes_updated', refreshNotes);
+    return () => window.removeEventListener('orbetex_notes_updated', refreshNotes);
+  }, []);
   
   const currentCategory = searchParams.get('category') || 'All';
   const currentStatus = searchParams.get('status') || 'All';
@@ -17,21 +24,21 @@ export default function Research() {
 
   // Extract unique categories & tags
   const categories = useMemo(() => {
-    const set = new Set(researchNotes.map(n => n.category).filter(Boolean));
+    const set = new Set(notesList.map(n => n.category).filter(Boolean));
     return ['All', ...Array.from(set)];
-  }, []);
+  }, [notesList]);
 
   const allTags = useMemo(() => {
     const map = new Map();
-    researchNotes.forEach(n => {
+    notesList.forEach(n => {
       n.tags?.forEach(t => map.set(t, (map.get(t) || 0) + 1));
     });
     return Array.from(map.entries()).sort((a, b) => b[1] - a[1]);
-  }, []);
+  }, [notesList]);
 
   // Filtered notes
   const filteredNotes = useMemo(() => {
-    return researchNotes.filter(n => {
+    return notesList.filter(n => {
       // Category match
       if (currentCategory !== 'All' && n.category !== currentCategory) return false;
       // Status match
@@ -85,8 +92,15 @@ export default function Research() {
 
       <header className={styles.header}>
         <div className="container">
-          <span className={styles.preTitle}>Scientific Notebook</span>
-          <h1 className={styles.title}>Research Notes &amp; Findings</h1>
+          <div className={styles.headerTopRow}>
+            <div>
+              <span className={styles.preTitle}>Scientific Notebook</span>
+              <h1 className={styles.title}>Research Notes &amp; Findings</h1>
+            </div>
+            <Link to="/research/new" className={styles.createNoteBtn}>
+              + Write Research Note
+            </Link>
+          </div>
           <p className={styles.lead}>
             Working notes, mathematical formulations, reproducibility scripts, and empirical observations
             from ongoing laboratory experiments in neural interpretability, cognitive dynamics, and physical systems.

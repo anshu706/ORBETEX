@@ -6,7 +6,6 @@ import styles from './Navbar.module.css';
 const NAV_LINKS = [
   { to: '/research', label: 'Research' },
   { to: '/about',    label: 'About'    },
-  { to: '/contact',  label: 'Contact'  },
 ];
 
 export default function Navbar() {
