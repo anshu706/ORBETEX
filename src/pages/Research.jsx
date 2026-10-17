@@ -191,7 +191,7 @@ export default function Research() {
 
           {/* Results count & clear */}
           <div className={styles.resultsMeta}>
-            <span>Showing <strong>{filteredNotes.length}</strong> of {researchNotes.length} research notes</span>
+            <span>Showing <strong>{filteredNotes.length}</strong> of {notesList.length} research notes</span>
             {(currentCategory !== 'All' || currentStatus !== 'All' || currentTag || searchQuery) && (
               <button className={styles.resetBtn} onClick={clearAllFilters}>
                 Reset all filters
