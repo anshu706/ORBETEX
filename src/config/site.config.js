@@ -1,47 +1,46 @@
 // ============================================================
 // Orbetex Research Notes — Site Configuration
-// Edit this file to personalize all site-wide content
+// Personal research hub publishing papers, projects, notes, and findings
 // ============================================================
 
 export const siteConfig = {
   // Brand
   brandName: "Orbetex",
   fullBrandName: "Orbetex Research Notes",
-  tagline: "Exploring the Intersection of Machine Learning & Human Cognition",
+  tagline: "Exploring the Intersection of Machine Learning, Cognition & Physical Systems",
 
   // Owner
-  name: "[YOUR NAME]",
+  name: "Anshu Upadhyay",
+  title: "AI Researcher & Systems Engineer",
   shortBio:
-    "I am a researcher passionate about pushing the boundaries of artificial intelligence and cognitive science. My work spans neural architecture design, interpretability, and the theoretical foundations of learning systems.",
-  affiliation: "[UNIVERSITY / DEPARTMENT / LAB]",
-  location: "[CITY, COUNTRY]",
+    "Researcher exploring the mathematical and mechanistic foundations of artificial intelligence, neural interpretability, cognitive attractor dynamics, and low-power hardware systems.",
+  affiliation: "Orbetex Research Lab",
+  location: "India",
 
   // Research Interests
   researchInterests: [
-    "Machine Learning",
+    "Mechanistic Interpretability",
+    "Cognitive Science & Attractor Networks",
     "Natural Language Processing",
-    "Cognitive Science",
-    "Neural Network Interpretability",
-    "Quantum Computing",
+    "Causal Discovery",
+    "Embedded Hardware & RF Systems",
+    "Quantum Tensor Networks",
   ],
 
   // Contact
-  email: "your.email@university.edu",
+  email: "anshupadhayay212@gmail.com",
 
   // Academic & Social Links
   links: {
-    github: "https://github.com/yourusername",
-    linkedin: "https://linkedin.com/in/yourprofile",
-    googleScholar: "https://scholar.google.com/citations?user=YOURID",
-    orcid: "https://orcid.org/0000-0000-0000-0000",
-    twitter: "https://twitter.com/yourhandle",
+    github: "https://github.com/anshu706",
+    linkedin: "https://linkedin.com/in/anshu-upadhyay",
+    googleScholar: "https://scholar.google.com",
+    orcid: "https://orcid.org/0009-0004-8921-9311",
+    twitter: "https://x.com/anshu_orbetex",
   },
 
-  // CV file (place in /public/)
-  cvFile: "/cv.pdf",
-
   // Site metadata
-  siteUrl: "https://yourdomain.github.io",
+  siteUrl: "https://anshu706.github.io/Orbetex",
   description:
-    "Personal research hub publishing papers, projects, notes, and findings in ML, NLP, and cognitive science.",
+    "Personal research hub publishing scientific notes, publications, interactive prototypes, and findings in ML, NLP, and cognitive systems.",
 };

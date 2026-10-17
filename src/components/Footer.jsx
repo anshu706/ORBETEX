@@ -15,7 +15,7 @@ export default function Footer() {
         <div className={styles.brand}>
           <OrbetexLogo variant="footer" size={36} showText={true} />
           <p className={styles.brandDesc}>
-            A personal research hub publishing papers, projects, and notes
+            A personal research hub publishing papers, research notes, and findings
             in machine learning, NLP, and cognitive science.
           </p>
         </div>
@@ -28,10 +28,8 @@ export default function Footer() {
               {[
                 { to: '/',            label: 'Home'         },
                 { to: '/research',    label: 'Research'     },
-                { to: '/projects',    label: 'Projects'     },
                 { to: '/publications',label: 'Publications' },
                 { to: '/about',       label: 'About'        },
-                { to: '/contact',     label: 'Contact'      },
               ].map(l => (
                 <li key={l.to}>
                   <Link to={l.to} className={styles.footerLink}>{l.label}</Link>

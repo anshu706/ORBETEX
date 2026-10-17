@@ -5,11 +5,8 @@ import styles from './Navbar.module.css';
 
 const NAV_LINKS = [
   { to: '/research',     label: 'Research'     },
-  { to: '/projects',     label: 'Projects'     },
   { to: '/publications', label: 'Publications' },
   { to: '/about',        label: 'About'         },
-  { to: '/cv',           label: 'CV'            },
-  { to: '/contact',      label: 'Contact'       },
 ];
 
 export default function Navbar() {

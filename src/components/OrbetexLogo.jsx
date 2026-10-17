@@ -62,21 +62,21 @@ export default function OrbetexLogo({
   // Orbital ring geometry
   const cx = r;
   const cy = r;
-  const ringRx = r * 0.56;
-  const ringRy = r * 0.26;
-  const ringStroke = size * 0.075;
+  const ringRx = r * 0.58;
+  const ringRy = r * 0.27;
+  const ringStroke = Math.max(1.5, size * 0.075);
 
-  // Satellite dot
-  const dotR = size * 0.09;
-  const dotX = cx + ringRx * Math.cos(-Math.PI / 3.5);
-  const dotY = cy + ringRy * Math.sin(-Math.PI / 3.5);
+  // Satellite dot on the orbit (transformed with the ring)
+  const dotAngle = -Math.PI / 3.4;
+  const dotR = Math.max(1.8, size * 0.095);
+  const dotX = cx + ringRx * Math.cos(dotAngle);
+  const dotY = cy + ringRy * Math.sin(dotAngle);
 
   return (
     <div
       className={`orbetex-logo ${className}`}
-      style={{ display: 'flex', alignItems: 'center', gap: size * 0.3 + 'px', ...style }}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: size * 0.3 + 'px', ...style }}
       aria-label="Orbetex Research Notes"
-      role="img"
     >
       {/* ── Mark ── */}
       <svg
@@ -95,36 +95,35 @@ export default function OrbetexLogo({
           fill={c.container}
         />
 
-        {/* Orbital ring (ellipse stroke) */}
-        <ellipse
-          cx={cx} cy={cy}
-          rx={ringRx} ry={ringRy}
-          stroke={c.ring}
-          strokeWidth={ringStroke}
-          fill="none"
-          transform={`rotate(-18 ${cx} ${cy})`}
-        />
-
-        {/* Satellite dot */}
-        <circle
-          cx={dotX}
-          cy={dotY}
-          r={dotR}
-          fill={c.dot}
-        />
+        {/* Orbital ring & Satellite dot locked to trajectory */}
+        <g transform={`rotate(-22 ${cx} ${cy})`}>
+          <ellipse
+            cx={cx} cy={cy}
+            rx={ringRx} ry={ringRy}
+            stroke={c.ring}
+            strokeWidth={ringStroke}
+            fill="none"
+          />
+          <circle
+            cx={dotX}
+            cy={dotY}
+            r={dotR}
+            fill={c.dot}
+          />
+        </g>
       </svg>
 
       {/* ── Wordmark ── */}
       {showText && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
           <span
             style={{
-              fontFamily: "'Lora', 'Source Serif 4', Georgia, serif",
-              fontWeight: 600,
-              fontSize: size * 0.525 + 'px',
+              fontFamily: "'Gravitas One', 'Lora', Georgia, serif",
+              fontWeight: 400,
+              fontSize: size * 0.54 + 'px',
               color: c.wordmark,
-              lineHeight: 1.1,
-              letterSpacing: '-0.01em',
+              lineHeight: 1.05,
+              letterSpacing: '-0.02em',
             }}
           >
             Orbetex
@@ -133,9 +132,9 @@ export default function OrbetexLogo({
             style={{
               fontFamily: "'Inter', -apple-system, sans-serif",
               fontWeight: 500,
-              fontSize: size * 0.265 + 'px',
+              fontSize: size * 0.24 + 'px',
               color: c.subtitle,
-              letterSpacing: '0.1em',
+              letterSpacing: '0.12em',
               textTransform: 'uppercase',
               lineHeight: 1,
             }}

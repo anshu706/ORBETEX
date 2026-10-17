@@ -2,7 +2,7 @@
    Orbetex Research Notes — Global Stylesheet
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gravitas+One&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import './variables.css';
 
 /* ── Reset & Base ── */
@@ -120,6 +120,47 @@ pre code {
   padding: 0;
   font-size: inherit;
   border-radius: 0;
+}
+
+/* ── Code Syntax Highlighting (Strict 4-Color Palette) ── */
+.hljs {
+  color: var(--text);
+  background: transparent;
+}
+.hljs-comment,
+.hljs-quote {
+  color: var(--text-muted);
+  font-style: italic;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: var(--accent);
+  font-weight: 600;
+}
+.hljs-string,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-literal,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-addition {
+  color: color-mix(in srgb, #7D4047 85%, #2E2E2E);
+}
+.hljs-number,
+.hljs-built_in,
+.hljs-symbol,
+.hljs-bullet {
+  color: #7D4047;
+  font-weight: 500;
+}
+.hljs-function,
+.hljs-title.function_,
+.hljs-params {
+  color: #2E2E2E;
+  font-weight: 600;
 }
 
 /* ── Tables ── */
