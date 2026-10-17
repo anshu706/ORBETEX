@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { siteConfig } from '../config/site.config';
 import styles from './Contact.module.css';
 
@@ -26,6 +27,21 @@ export default function Contact() {
 
   return (
     <div className="page-wrapper">
+      <Helmet>
+        <title>{`Contact & Inquiries — ${siteConfig.brandName}`}</title>
+        <meta
+          name="description"
+          content={`Connect with ${siteConfig.name} at ${siteConfig.affiliation} for scientific collaboration, paper inquiries, research visits, or speaking requests.`}
+        />
+        <meta property="og:title" content={`Contact & Inquiries — ${siteConfig.brandName}`} />
+        <meta
+          property="og:description"
+          content={`Direct research and academic inquiry portal for ${siteConfig.name}.`}
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${siteConfig.siteUrl}/contact`} />
+      </Helmet>
+
       <header className={styles.header}>
         <div className="container">
           <span className={styles.preTitle}>Communications</span>

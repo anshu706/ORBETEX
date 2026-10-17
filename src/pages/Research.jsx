@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { researchNotes } from '../data/researchNotes';
+import { siteConfig } from '../config/site.config';
 import StatusBadge from '../components/StatusBadge';
 import TagChip from '../components/TagChip';
 import styles from './Research.module.css';
@@ -66,6 +68,21 @@ export default function Research() {
 
   return (
     <div className="page-wrapper">
+      <Helmet>
+        <title>{`Research Notes & Findings — ${siteConfig.brandName}`}</title>
+        <meta
+          name="description"
+          content="Laboratory working notes, mathematical formulations, and reproducible code on neural interpretability, attractor dynamics, and causal models."
+        />
+        <meta property="og:title" content={`Research Notes — ${siteConfig.brandName}`} />
+        <meta
+          property="og:description"
+          content="Laboratory working notes, mathematical formulations, and reproducible code on neural interpretability and physical systems."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${siteConfig.siteUrl}/research`} />
+      </Helmet>
+
       <header className={styles.header}>
         <div className="container">
           <span className={styles.preTitle}>Scientific Notebook</span>

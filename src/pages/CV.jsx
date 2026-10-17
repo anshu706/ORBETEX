@@ -1,6 +1,8 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { cvData } from '../data/cvData';
 import { publications } from '../data/publications';
+import { siteConfig } from '../config/site.config';
 import styles from './CV.module.css';
 
 export default function CV() {
@@ -10,6 +12,21 @@ export default function CV() {
 
   return (
     <div className="page-wrapper">
+      <Helmet>
+        <title>{`Curriculum Vitae — ${cvData.personal.name} | ${siteConfig.brandName}`}</title>
+        <meta
+          name="description"
+          content={`Academic curriculum vitae of ${cvData.personal.name}, AI Researcher & Systems Engineer. Education, appointments, publications, grants, and technical competencies.`}
+        />
+        <meta property="og:title" content={`Curriculum Vitae — ${cvData.personal.name}`} />
+        <meta
+          property="og:description"
+          content={`Academic CV of ${cvData.personal.name}, AI Researcher & Systems Engineer.`}
+        />
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content={`${siteConfig.siteUrl}/cv`} />
+      </Helmet>
+
       <div className={styles.actionBar}>
         <div className="container">
           <div className={styles.actionInner}>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
 import { researchNotes } from '../data/researchNotes';
+import { siteConfig } from '../config/site.config';
 import StatusBadge from '../components/StatusBadge';
 import TagChip from '../components/TagChip';
 import BibtexModal from '../components/BibtexModal';
@@ -76,6 +78,19 @@ export default function ResearchDetail() {
 
   return (
     <div className="page-wrapper">
+      <Helmet>
+        <title>{`${note.title} — Orbetex Research Notes`}</title>
+        <meta name="description" content={note.summary} />
+        <meta name="author" content="Anshu Upadhyay" />
+        <meta property="og:title" content={note.title} />
+        <meta property="og:description" content={note.summary} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`${siteConfig.siteUrl}/research/${note.slug}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={note.title} />
+        <meta name="twitter:description" content={note.summary} />
+      </Helmet>
+
       {/* Top Reading Progress Indicator */}
       <div
         className={styles.progressBar}
@@ -141,6 +156,22 @@ export default function ResearchDetail() {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex, rehypeHighlight]}
+                components={{
+                  h2: ({ children, ...props }) => {
+                    const text = React.Children.toArray(children)
+                      .map(c => (typeof c === 'string' ? c : c?.props?.children || ''))
+                      .join('');
+                    const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                    return <h2 id={id} {...props}>{children}</h2>;
+                  },
+                  h3: ({ children, ...props }) => {
+                    const text = React.Children.toArray(children)
+                      .map(c => (typeof c === 'string' ? c : c?.props?.children || ''))
+                      .join('');
+                    const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                    return <h3 id={id} {...props}>{children}</h3>;
+                  }
+                }}
               >
                 {note.content}
               </ReactMarkdown>

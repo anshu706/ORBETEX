@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { publications } from '../data/publications';
+import { siteConfig } from '../config/site.config';
 import BibtexModal from '../components/BibtexModal';
 import styles from './Publications.module.css';
 
@@ -55,6 +57,21 @@ export default function Publications() {
 
   return (
     <div className="page-wrapper">
+      <Helmet>
+        <title>{`Publications & Preprints — ${siteConfig.brandName}`}</title>
+        <meta
+          name="description"
+          content="Academic papers, conference proceedings, preprints, and citations in mechanistic interpretability, attractor dynamics, and causal learning."
+        />
+        <meta property="og:title" content={`Publications & Preprints — ${siteConfig.brandName}`} />
+        <meta
+          property="og:description"
+          content="Academic papers, conference proceedings, preprints, and citations by Anshu Upadhyay."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${siteConfig.siteUrl}/publications`} />
+      </Helmet>
+
       <header className={styles.header}>
         <div className="container">
           <span className={styles.preTitle}>Scholarly Contributions</span>

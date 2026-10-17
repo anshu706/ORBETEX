@@ -1,10 +1,26 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { siteConfig } from '../config/site.config';
 import styles from './About.module.css';
 
 export default function About() {
   return (
     <div className="page-wrapper">
+      <Helmet>
+        <title>{`About the Researcher & Lab — ${siteConfig.brandName}`}</title>
+        <meta
+          name="description"
+          content={`Biographical background, core research pillars, scientific philosophy, and academic collaborations of ${siteConfig.name} at ${siteConfig.affiliation}.`}
+        />
+        <meta property="og:title" content={`About ${siteConfig.name} — ${siteConfig.brandName}`} />
+        <meta
+          property="og:description"
+          content={`Biographical background and research agenda of ${siteConfig.name} at ${siteConfig.affiliation}.`}
+        />
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content={`${siteConfig.siteUrl}/about`} />
+      </Helmet>
+
       <header className={styles.header}>
         <div className="container">
           <span className={styles.preTitle}>Researcher Dossier</span>

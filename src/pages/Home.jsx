@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { siteConfig } from '../config/site.config';
 import { researchNotes } from '../data/researchNotes';
 import { publications } from '../data/publications';
@@ -17,6 +18,15 @@ export default function Home() {
 
   return (
     <div className="page-wrapper">
+      <Helmet>
+        <title>{`${siteConfig.brandName} — Research Notes & Scientific Findings`}</title>
+        <meta name="description" content={siteConfig.description} />
+        <meta property="og:title" content={`${siteConfig.brandName} — Research Hub`} />
+        <meta property="og:description" content={siteConfig.description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={siteConfig.siteUrl} />
+      </Helmet>
+
       {/* ── Hero Section ── */}
       <section className={styles.heroSection}>
         <div className={`container ${styles.heroInner}`}>

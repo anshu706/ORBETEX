@@ -1,9 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 export default function NotFound() {
   return (
     <div className="page-wrapper">
+      <Helmet>
+        <title>404 — Research Vector Not Found | Orbetex</title>
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
       <div className="container" style={{ textAlign: 'center', padding: '100px var(--space-4)' }}>
         <span style={{
           fontFamily: 'var(--font-display)',

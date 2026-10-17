@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { projects } from '../data/projects';
+import { siteConfig } from '../config/site.config';
 import StatusBadge from '../components/StatusBadge';
 import styles from './Projects.module.css';
 
@@ -20,6 +22,21 @@ export default function Projects() {
 
   return (
     <div className="page-wrapper">
+      <Helmet>
+        <title>{`Research Engineering Projects — ${siteConfig.brandName}`}</title>
+        <meta
+          name="description"
+          content="Open-source AI toolkits, mechanistic interpretability workbenches, neural simulators, and custom embedded hardware prototypes."
+        />
+        <meta property="og:title" content={`Research Engineering Projects — ${siteConfig.brandName}`} />
+        <meta
+          property="og:description"
+          content="Open-source AI toolkits, neural simulators, and custom embedded hardware prototypes by Anshu Upadhyay."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${siteConfig.siteUrl}/projects`} />
+      </Helmet>
+
       <header className={styles.header}>
         <div className="container">
           <span className={styles.preTitle}>Prototypes &amp; Systems</span>
