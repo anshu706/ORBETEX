@@ -1,0 +1,71 @@
+/* ============================================================
+   Orbetex Research Notes — CSS Design Tokens
+   STRICT 4-color palette. No deviations allowed.
+   ============================================================ */
+
+:root {
+  /* ── Core Palette ── */
+  --bg:      #F1ECE6; /* Alabaster Cream   – Main page background        */
+  --surface: #DDD5CD; /* Warm Greige       – Cards, sidebars, code blocks */
+  --accent:  #7D4047; /* Vintage Rosewood  – Buttons, links, active nav   */
+  --text:    #2E2E2E; /* Charcoal Espresso – Headings, body text, footer  */
+
+  /* ── Opacity/Tint Variants (strictly derived from palette) ── */
+  --accent-hover:    color-mix(in srgb, #7D4047 85%, #2E2E2E);
+  --accent-subtle:   color-mix(in srgb, #7D4047 12%, #F1ECE6);
+  --surface-hover:   color-mix(in srgb, #DDD5CD 80%, #2E2E2E);
+  --border:          color-mix(in srgb, #2E2E2E 18%, #F1ECE6);
+  --border-strong:   color-mix(in srgb, #2E2E2E 35%, #F1ECE6);
+  --text-muted:      color-mix(in srgb, #2E2E2E 60%, #F1ECE6);
+
+  /* ── Typography ── */
+  --font-serif:  'Lora', 'Source Serif 4', Georgia, serif;
+  --font-sans:   'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:   'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* ── Type Scale ── */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1.0625rem;   /* 17px */
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+  --text-5xl:  3rem;
+
+  /* ── Spacing Scale (8px base) ── */
+  --space-1:  0.25rem;  /*  4px */
+  --space-2:  0.5rem;   /*  8px */
+  --space-3:  0.75rem;  /* 12px */
+  --space-4:  1rem;     /* 16px */
+  --space-5:  1.25rem;  /* 20px */
+  --space-6:  1.5rem;   /* 24px */
+  --space-8:  2rem;     /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* ── Layout ── */
+  --max-content:  1200px;
+  --max-reading:  70ch;
+  --nav-height:   68px;
+
+  /* ── Borders & Radii ── */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-full: 9999px;
+  --border-width: 1px;
+
+  /* ── Shadows (using text color for depth) ── */
+  --shadow-sm:  0 1px 3px color-mix(in srgb, #2E2E2E 10%, transparent);
+  --shadow-md:  0 4px 12px color-mix(in srgb, #2E2E2E 12%, transparent);
+  --shadow-lg:  0 8px 24px color-mix(in srgb, #2E2E2E 14%, transparent);
+
+  /* ── Transitions ── */
+  --transition-fast:   150ms ease;
+  --transition-normal: 200ms ease;
+}
