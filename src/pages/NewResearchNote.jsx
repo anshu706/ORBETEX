@@ -27,6 +27,8 @@ export default function NewResearchNote() {
 
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
+  const [noteDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [noteYear] = useState(() => new Date().getFullYear());
   const [category, setCategory] = useState(DEFAULT_CATEGORIES[0]);
   const [customCategory, setCustomCategory] = useState('');
   const [status, setStatus] = useState('in-progress');
@@ -92,18 +94,18 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
     id: slug || 'draft-note',
     slug: slug || 'draft-note',
     title: title || 'Untitled Research Note',
-    date: new Date().toISOString().split('T')[0],
+    date: noteDate,
     status,
     readingTime,
     category: currentCategory || 'Research Note',
     tags: getFinalTags(),
     summary,
     mathSample,
-    bibtex: `@article{orbetex${new Date().getFullYear()}${slug || 'note'},
+    bibtex: `@article{orbetex${noteYear}${slug || 'note'},
   title={${title || 'Research Note'}},
   author={${siteConfig.name}},
   journal={Orbetex Research Notes},
-  year={${new Date().getFullYear()}}
+  year={${noteYear}}
 }`,
     content
   };

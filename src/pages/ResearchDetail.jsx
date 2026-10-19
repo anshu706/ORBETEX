@@ -149,7 +149,7 @@ export default function ResearchDetail() {
             <p className={styles.articleAbstract}>{note.summary}</p>
 
             <div className={styles.tagsBar}>
-              {note.tags.map(tag => (
+              {(note.tags || []).map(tag => (
                 <TagChip key={tag} tag={tag} />
               ))}
             </div>

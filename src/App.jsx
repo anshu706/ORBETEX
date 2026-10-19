@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
+import ErrorBoundary from './components/ErrorBoundary';
+
 // Lazy-loaded route pages for optimal bundle chunking
 const Home = lazy(() => import('./pages/Home'));
 const Research = lazy(() => import('./pages/Research'));
@@ -41,16 +43,18 @@ function App() {
         </a>
         <Navbar />
         <div id="main-content">
-          <Suspense fallback={<PageFallback />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/research" element={<Research />} />
-              <Route path="/research/new" element={<NewResearchNote />} />
-              <Route path="/research/:slug" element={<ResearchDetail />} />
-              <Route path="/about" element={<About />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<PageFallback />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/research" element={<Research />} />
+                <Route path="/research/new" element={<NewResearchNote />} />
+                <Route path="/research/:slug" element={<ResearchDetail />} />
+                <Route path="/about" element={<About />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
         </div>
         <Footer />
       </Router>

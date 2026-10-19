@@ -114,12 +114,12 @@ export default function Home() {
                   </div>
                 )}
 
-                <div className={styles.cardFooter}>
-                  <div className={styles.tagsRow}>
-                    {note.tags.slice(0, 3).map(tag => (
-                      <TagChip key={tag} tag={tag} />
-                    ))}
-                  </div>
+                  <div className={styles.cardFooter}>
+                    <div className={styles.tagsRow}>
+                      {(note.tags || []).slice(0, 3).map(tag => (
+                        <TagChip key={tag} tag={tag} />
+                      ))}
+                    </div>
                   <Link to={`/research/${note.slug}`} className={styles.readLink} aria-label={`Read note: ${note.title}`}>
                     Read note →
                   </Link>

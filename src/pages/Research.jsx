@@ -56,7 +56,7 @@ export default function Research() {
       }
       return true;
     });
-  }, [currentCategory, currentStatus, currentTag, searchQuery]);
+  }, [notesList, currentCategory, currentStatus, currentTag, searchQuery]);
 
   const updateFilter = (key, value) => {
     const next = new URLSearchParams(searchParams);
@@ -225,7 +225,7 @@ export default function Research() {
 
                   <div className={styles.cardFooter}>
                     <div className={styles.tagsContainer}>
-                      {note.tags.map(tag => (
+                      {(note.tags || []).map(tag => (
                         <TagChip
                           key={tag}
                           tag={tag}
