@@ -118,7 +118,7 @@ export default function OrbetexLogo({
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
           <span
             style={{
-              fontFamily: "'Gravitas One', 'Lora', Georgia, serif",
+              fontFamily: "var(--font-display, 'Gravitas One', Georgia, serif)",
               fontWeight: 400,
               fontSize: size * 0.54 + 'px',
               color: c.wordmark,

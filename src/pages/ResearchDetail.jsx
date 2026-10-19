@@ -179,6 +179,17 @@ export default function ResearchDetail() {
                     const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
                     return <h3 id={id} {...props}>{children}</h3>;
                   },
+                  p: ({ node, children, ...props }) => {
+                    const hasBlockElement =
+                      node?.children?.some(c => c.tagName === 'img' || c.tagName === 'figure') ||
+                      React.Children.toArray(children).some(
+                        child => React.isValidElement(child) && (child.type === 'figure' || child.props?.className?.includes?.('mediaFigure'))
+                      );
+                    if (hasBlockElement) {
+                      return <div {...props}>{children}</div>;
+                    }
+                    return <p {...props}>{children}</p>;
+                  },
                   img: ({ src, alt, title }) => {
                     const isVideo = src && /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(src);
                     const isYouTube = src && (src.includes('youtube.com') || src.includes('youtu.be'));
