@@ -384,7 +384,7 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
 
             <div style={{ marginBottom: 'var(--space-4)' }}>
               <StatusBadge status={status} />
-              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', margin: '12px 0 6px' }}>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: '1.4rem', margin: '12px 0 6px' }}>
                 {title || 'Untitled Note Preview'}
               </h2>
               <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '8px' }}>
@@ -476,7 +476,7 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
         <div className={styles.modalBackdrop} onClick={() => setShowCodeModal(false)}>
           <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
             <div className={styles.modalHeader}>
-              <h3 style={{ margin: 0, fontFamily: 'var(--font-serif)', fontSize: 'var(--text-lg)' }}>
+              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'var(--text-lg)' }}>
                 JavaScript Object for <code>src/data/researchNotes.js</code>
               </h3>
               <button

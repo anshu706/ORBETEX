@@ -19,7 +19,7 @@ export default function NotFound() {
         }}>
           404
         </span>
-        <h1 style={{ fontFamily: 'var(--font-serif)', margin: 'var(--space-4) 0 var(--space-2)' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, margin: 'var(--space-4) 0 var(--space-2)' }}>
           Research Vector Not Found
         </h1>
         <p style={{ color: 'var(--text-muted)', maxWidth: '480px', margin: '0 auto var(--space-6)' }}>

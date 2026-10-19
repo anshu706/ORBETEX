@@ -24,7 +24,7 @@ export default class ErrorBoundary extends React.Component {
           margin: '0 auto',
           fontFamily: 'var(--font-sans)'
         }}>
-          <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--text)' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, color: 'var(--text)' }}>
             Something went wrong loading this laboratory module
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '16px 0 24px' }}>

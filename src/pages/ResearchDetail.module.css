@@ -97,13 +97,14 @@
 }
 
 .articleTitle {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3.25rem);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.2;
   color: var(--text);
   margin-bottom: var(--space-4);
   max-width: 900px;
+  letter-spacing: -0.02em;
 }
 
 .articleAbstract {
@@ -191,7 +192,8 @@
 
 .citationHeader h3 {
   font-size: var(--text-base);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
+  font-weight: 400;
 }
 
 .copyInlineBtn {

@@ -8,7 +8,7 @@ export const siteConfig = {
   tagline: "Exploring the Intersection of Machine Learning, Cognition & Physical Systems",
 
   // Owner
-  name: "Anshu Upadhyay",
+  name: "Ansh Upadhayay",
   title: "AI Researcher & Systems Engineer",
   shortBio:
     "Researcher exploring the mathematical and mechanistic foundations of artificial intelligence, neural interpretability, cognitive attractor dynamics, and low-power hardware systems.",
@@ -31,14 +31,11 @@ export const siteConfig = {
   // Academic & Social Links
   links: {
     github: "https://github.com/anshu706",
-    linkedin: "https://linkedin.com/in/anshu-upadhyay",
-    googleScholar: "https://scholar.google.com",
-    orcid: "https://orcid.org/0009-0004-8921-9311",
-    twitter: "https://x.com/anshu_orbetex",
+    linkedin: "https://www.linkedin.com/in/ansh-upadhayay-011b77310/"
   },
 
   // Site metadata
-  siteUrl: "https://anshu706.github.io/Orbetex",
+  siteUrl: "#",
   description:
     "Personal research hub publishing scientific notes, interactive prototypes, and findings in ML, NLP, and cognitive systems.",
 };

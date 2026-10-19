@@ -54,7 +54,8 @@
 
 .title {
   font-size: var(--text-lg);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
+  font-weight: 400;
   color: var(--text);
   line-height: 1.3;
 }

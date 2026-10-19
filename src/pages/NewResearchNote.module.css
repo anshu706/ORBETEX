@@ -86,7 +86,9 @@
 
 .title {
   font-size: var(--text-3xl);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
   color: var(--text);
   margin-bottom: var(--space-2);
 }
@@ -123,8 +125,9 @@
 }
 
 .formSectionTitle {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: var(--text-lg);
+  font-weight: 400;
   border-bottom: 1px solid var(--border);
   padding-bottom: var(--space-2);
   margin-bottom: var(--space-3);

@@ -155,8 +155,6 @@ export default function About() {
                 <dd>{siteConfig.location}</dd>
                 <dt>Email</dt>
                 <dd><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></dd>
-                <dt>ORCID</dt>
-                <dd><a href="https://orcid.org/0009-0004-8921-9311" target="_blank" rel="noopener noreferrer">0009-0004-8921-9311</a></dd>
               </dl>
             </div>
           </aside>

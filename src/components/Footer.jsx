@@ -43,7 +43,6 @@ export default function Footer() {
               <li><a href={siteConfig.links.googleScholar} className={styles.footerLink} target="_blank" rel="noopener noreferrer">Google Scholar</a></li>
               <li><a href={siteConfig.links.github}        className={styles.footerLink} target="_blank" rel="noopener noreferrer">GitHub</a></li>
               <li><a href={siteConfig.links.linkedin}      className={styles.footerLink} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-              <li><a href={siteConfig.links.orcid}         className={styles.footerLink} target="_blank" rel="noopener noreferrer">ORCID</a></li>
               <li><a href={`mailto:${siteConfig.email}`}   className={styles.footerLink}>Email</a></li>
             </ul>
           </nav>
