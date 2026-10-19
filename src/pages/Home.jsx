@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import { siteConfig } from '../config/site.config';
 import { getAllNotes } from '../data/notesManager';
 import StatusBadge from '../components/StatusBadge';
@@ -110,22 +113,47 @@ export default function Home() {
 
                 {note.mathSample && (
                   <div className={styles.noteMathPreview}>
-                    <code>{note.mathSample}</code>
+                    <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                      {note.mathSample}
+                    </ReactMarkdown>
                   </div>
                 )}
 
-                  <div className={styles.cardFooter}>
-                    <div className={styles.tagsRow}>
-                      {(note.tags || []).slice(0, 3).map(tag => (
-                        <TagChip key={tag} tag={tag} />
-                      ))}
-                    </div>
+                <div className={styles.cardFooter}>
+                  <div className={styles.tagsRow}>
+                    {(note.tags || []).slice(0, 3).map(tag => (
+                      <TagChip key={tag} tag={tag} />
+                    ))}
+                  </div>
                   <Link to={`/research/${note.slug}`} className={styles.readLink} aria-label={`Read note: ${note.title}`}>
                     Read note →
                   </Link>
                 </div>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Open Scientific Inquiry Invitation ── */}
+      <section className={styles.invitationSection}>
+        <div className="container">
+          <div className={styles.invitationCard}>
+            <div>
+              <h2 className={styles.invitationTitle}>Open Scientific Inquiry</h2>
+              <p className={styles.invitationText}>
+                Orbetex publishes reproducible research notes, mathematical formulations, and interactive experiments.
+                Compose working notes locally, test formulas in real time, or reach out to collaborate on mechanistic interpretability and cognitive dynamical systems.
+              </p>
+            </div>
+            <div className={styles.invitationActions}>
+              <Link to="/research/new" className={styles.primaryAction}>
+                + Write Research Note
+              </Link>
+              <a href={`mailto:${siteConfig.email}`} className={styles.secondaryAction}>
+                Get in Touch →
+              </a>
+            </div>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -7,15 +7,45 @@ import remarkMath from 'remark-math';
 import rehypeRaw from 'rehype-raw';
 import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
-import { getAllNotes } from '../data/notesManager';
+import { getAllNotes, getStoredNotes, deleteUserNote } from '../data/notesManager';
 import { siteConfig } from '../config/site.config';
 import StatusBadge from '../components/StatusBadge';
 import TagChip from '../components/TagChip';
 import BibtexModal from '../components/BibtexModal';
 import styles from './ResearchDetail.module.css';
 
+function CodeBlock({ children, ...props }) {
+  const [copied, setCopied] = useState(false);
+  const preRef = useRef(null);
+
+  const handleCopy = () => {
+    if (preRef.current) {
+      navigator.clipboard.writeText(preRef.current.innerText || '');
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <div className={styles.codeBlockWrapper}>
+      <button
+        type="button"
+        className={styles.copyCodeBtn}
+        onClick={handleCopy}
+        aria-label="Copy code to clipboard"
+      >
+        {copied ? '✓ Copied' : 'Copy'}
+      </button>
+      <pre ref={preRef} {...props}>
+        {children}
+      </pre>
+    </div>
+  );
+}
+
 export default function ResearchDetail() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [readingProgress, setReadingProgress] = useState(0);
   const [showBibtex, setShowBibtex] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
@@ -29,6 +59,14 @@ export default function ResearchDetail() {
 
   const noteIndex = notesList.findIndex(n => n.slug === slug || n.id === slug);
   const note = notesList[noteIndex];
+  const isUserNote = note ? getStoredNotes().some(n => n.slug === note.slug || n.id === note.slug) : false;
+
+  const handleDelete = () => {
+    if (window.confirm(`Are you sure you want to delete "${note.title}"? This cannot be undone.`)) {
+      deleteUserNote(note.slug);
+      navigate('/research');
+    }
+  };
 
   // Next / Previous notes
   const prevNote = noteIndex > 0 ? notesList[noteIndex - 1] : null;
@@ -89,7 +127,7 @@ export default function ResearchDetail() {
       <Helmet>
         <title>{`${note.title} — Orbetex Research Notes`}</title>
         <meta name="description" content={note.summary} />
-        <meta name="author" content="Anshu Upadhyay" />
+        <meta name="author" content={siteConfig.name} />
         <meta property="og:title" content={note.title} />
         <meta property="og:description" content={note.summary} />
         <meta property="og:type" content="article" />
@@ -118,7 +156,25 @@ export default function ResearchDetail() {
                 ← Back to Research Notes
               </Link>
               <div className={styles.headerActions}>
+                {isUserNote && (
+                  <>
+                    <Link
+                      to={`/research/new?edit=${note.slug}`}
+                      className={styles.actionBtn}
+                    >
+                      ✎ Edit Note
+                    </Link>
+                    <button
+                      type="button"
+                      className={styles.actionBtnDanger}
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
                 <button
+                  type="button"
                   className={styles.actionBtn}
                   onClick={handleShare}
                   aria-label="Copy note link"
@@ -127,6 +183,7 @@ export default function ResearchDetail() {
                 </button>
                 {note.bibtex && (
                   <button
+                    type="button"
                     className={styles.actionBtnPrimary}
                     onClick={() => setShowBibtex(true)}
                   >
@@ -165,6 +222,26 @@ export default function ResearchDetail() {
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeRaw, rehypeKatex, rehypeHighlight]}
                 components={{
+                  pre: CodeBlock,
+                  blockquote: ({ children, ...props }) => {
+                    const text = React.Children.toArray(children)
+                      .map(c => (typeof c === 'string' ? c : c?.props?.children || ''))
+                      .join('');
+
+                    const match = text.match(/\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/i);
+                    if (match) {
+                      const type = match[1].toUpperCase();
+                      return (
+                        <div className={`${styles.calloutBox} ${styles[`callout_${type.toLowerCase()}`] || ''}`}>
+                          <span className={styles.calloutBadge}>{type}</span>
+                          <div className={styles.calloutContent}>
+                            {children}
+                          </div>
+                        </div>
+                      );
+                    }
+                    return <blockquote {...props}>{children}</blockquote>;
+                  },
                   h2: ({ children, ...props }) => {
                     const text = React.Children.toArray(children)
                       .map(c => (typeof c === 'string' ? c : c?.props?.children || ''))
@@ -304,9 +381,9 @@ export default function ResearchDetail() {
                 <h4 className={styles.metaCardTitle}>Archive Metadata</h4>
                 <dl className={styles.metaList}>
                   <dt>Researcher</dt>
-                  <dd>Anshu Upadhyay</dd>
+                  <dd>{siteConfig.name}</dd>
                   <dt>Laboratory</dt>
-                  <dd>Orbetex Research Lab</dd>
+                  <dd>{siteConfig.affiliation}</dd>
                   <dt>Field</dt>
                   <dd>{note.category}</dd>
                   <dt>Lifecycle Stage</dt>

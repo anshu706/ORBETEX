@@ -415,3 +415,82 @@
   letter-spacing: 0.02em;
 }
 
+/* ── Code Block with Copy Button ── */
+.codeBlockWrapper {
+  position: relative;
+  margin: var(--space-6) 0;
+}
+
+.codeBlockWrapper pre {
+  margin: 0;
+}
+
+.copyCodeBtn {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 3px 8px;
+  cursor: pointer;
+  z-index: 2;
+  transition: all var(--transition-fast);
+}
+
+.copyCodeBtn:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+
+/* ── Danger Action Button ── */
+.actionBtnDanger {
+  background: transparent;
+  border: 1px solid color-mix(in srgb, #7D4047 40%, transparent);
+  color: var(--accent);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.actionBtnDanger:hover {
+  background: color-mix(in srgb, #7D4047 15%, transparent);
+  border-color: var(--accent);
+}
+
+/* ── Styled Callout Boxes ── */
+.calloutBox {
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: var(--space-4) var(--space-6);
+  margin: var(--space-6) 0;
+}
+
+.calloutBadge {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+
+.calloutContent {
+  font-size: var(--text-base);
+  color: var(--text);
+}
+
+.calloutContent p:last-child {
+  margin-bottom: 0;
+}
+

@@ -15,7 +15,16 @@ export default function Navbar() {
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 12);
     window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
+
+    const keyHandler = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', keyHandler);
+
+    return () => {
+      window.removeEventListener('scroll', handler);
+      window.removeEventListener('keydown', keyHandler);
+    };
   }, []);
 
   // Close menu on route change
@@ -29,20 +38,25 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop links */}
-        <ul className={styles.navLinks} role="list">
-          {NAV_LINKS.map(link => (
-            <li key={link.to}>
-              <NavLink
-                to={link.to}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ''}`
-                }
-              >
-                {link.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+        <div className={styles.desktopActions}>
+          <ul className={styles.navLinks} role="list">
+            {NAV_LINKS.map(link => (
+              <li key={link.to}>
+                <NavLink
+                  to={link.to}
+                  className={({ isActive }) =>
+                    `${styles.navLink} ${isActive ? styles.active : ''}`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+          <Link to="/research/new" className={styles.writeNavBtn}>
+            + Write Note
+          </Link>
+        </div>
 
         {/* Mobile hamburger */}
         <button
@@ -77,6 +91,9 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+        <Link to="/research/new" className={styles.mobileWriteBtn} onClick={closeMenu}>
+          + Write Research Note
+        </Link>
       </div>
     </header>
   );

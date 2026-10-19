@@ -41,7 +41,7 @@ export default function About() {
               <h2 className={styles.sectionTitle}>Biographical Statement</h2>
               <div className={styles.prose}>
                 <p>
-                  I am <strong>Anshu Upadhyay</strong>, an artificial intelligence researcher and systems engineer.
+                  I am <strong>{siteConfig.name}</strong>, an artificial intelligence researcher and systems engineer.
                   My intellectual agenda centers on demystifying the latent representations of high-dimensional neural
                   networks and building formal bridges between biological cognitive dynamics and contemporary computational architectures.
                 </p>
@@ -138,7 +138,7 @@ export default function About() {
             <div className={styles.sidebarCard}>
               <div className={styles.profileHeader}>
                 <div className={styles.avatarSquircle}>
-                  AU
+                  {siteConfig.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
                   <h3 className={styles.profileName}>{siteConfig.name}</h3>
@@ -155,6 +155,24 @@ export default function About() {
                 <dd>{siteConfig.location}</dd>
                 <dt>Email</dt>
                 <dd><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></dd>
+                {siteConfig.links.github && (
+                  <>
+                    <dt>GitHub</dt>
+                    <dd><a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer">@anshu706</a></dd>
+                  </>
+                )}
+                {siteConfig.links.linkedin && (
+                  <>
+                    <dt>LinkedIn</dt>
+                    <dd><a href={siteConfig.links.linkedin} target="_blank" rel="noopener noreferrer">Profile</a></dd>
+                  </>
+                )}
+                {siteConfig.links.googleScholar && (
+                  <>
+                    <dt>Scholar</dt>
+                    <dd><a href={siteConfig.links.googleScholar} target="_blank" rel="noopener noreferrer">Google Scholar</a></dd>
+                  </>
+                )}
               </dl>
             </div>
           </aside>

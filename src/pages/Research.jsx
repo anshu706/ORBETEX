@@ -1,6 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import { getAllNotes } from '../data/notesManager';
 import { siteConfig } from '../config/site.config';
 import StatusBadge from '../components/StatusBadge';
@@ -219,7 +222,9 @@ export default function Research() {
 
                   {note.mathSample && (
                     <div className={styles.mathBlock}>
-                      <code>{note.mathSample}</code>
+                      <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                        {note.mathSample}
+                      </ReactMarkdown>
                     </div>
                   )}
 
@@ -229,7 +234,8 @@ export default function Research() {
                         <TagChip
                           key={tag}
                           tag={tag}
-                          onClick={() => updateFilter('tag', tag)}
+                          active={currentTag === tag}
+                          onClick={() => updateFilter('tag', currentTag === tag ? null : tag)}
                         />
                       ))}
                     </div>

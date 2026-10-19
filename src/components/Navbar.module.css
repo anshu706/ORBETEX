@@ -141,9 +141,54 @@
 .mobileLink:hover { color: var(--text); background: var(--surface); }
 .mobileLink.active { color: var(--accent); font-weight: 600; }
 
+.desktopActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.writeNavBtn {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.writeNavBtn:hover {
+  background: var(--accent-hover);
+  color: var(--bg);
+  transform: translateY(-1px);
+}
+
+.mobileWriteBtn {
+  margin-top: var(--space-3);
+  display: block;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+}
+
+.mobileWriteBtn:hover {
+  background: var(--accent-hover);
+  color: var(--bg);
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  .navLinks { display: none; }
+  .desktopActions { display: none; }
   .hamburger { display: flex; }
   .mobileMenu.mobileOpen { display: block; }
 }

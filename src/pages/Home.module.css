@@ -308,6 +308,10 @@
   font-size: var(--text-xs);
 }
 
+.noteMathPreview :global(.katex-display) {
+  margin: 4px 0;
+}
+
 .cardFooter {
   display: flex;
   justify-content: space-between;

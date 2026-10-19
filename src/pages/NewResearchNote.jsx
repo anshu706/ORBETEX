@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import rehypeRaw from 'rehype-raw';
 import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
-import { saveUserNote, formatNoteAsCode } from '../data/notesManager';
+import { saveUserNote, formatNoteAsCode, getNoteBySlug } from '../data/notesManager';
 import { siteConfig } from '../config/site.config';
 import StatusBadge from '../components/StatusBadge';
 import TagChip from '../components/TagChip';
@@ -24,19 +25,29 @@ const DEFAULT_CATEGORIES = [
 
 export default function NewResearchNote() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const editSlug = searchParams.get('edit');
+  const existingNote = editSlug ? getNoteBySlug(editSlug) : null;
+  const isEditing = Boolean(existingNote);
 
-  const [title, setTitle] = useState('');
-  const [slug, setSlug] = useState('');
-  const [noteDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [title, setTitle] = useState(() => existingNote?.title || '');
+  const [slug, setSlug] = useState(() => existingNote?.slug || '');
+  const [noteDate] = useState(() => existingNote?.date || new Date().toISOString().split('T')[0]);
   const [noteYear] = useState(() => new Date().getFullYear());
-  const [category, setCategory] = useState(DEFAULT_CATEGORIES[0]);
-  const [customCategory, setCustomCategory] = useState('');
-  const [status, setStatus] = useState('in-progress');
-  const [readingTime, setReadingTime] = useState('5 min read');
-  const [tagsInput, setTagsInput] = useState('Interpretability, Neural Dynamics');
-  const [summary, setSummary] = useState('');
-  const [mathSample, setMathSample] = useState('$$ \\mathcal{L} = \\|x - \\hat{x}\\|^2_2 $$');
-  const [content, setContent] = useState(`## 1. Abstract & Motivation
+  const [category, setCategory] = useState(() => {
+    if (!existingNote?.category) return DEFAULT_CATEGORIES[0];
+    return DEFAULT_CATEGORIES.includes(existingNote.category) ? existingNote.category : 'Custom';
+  });
+  const [customCategory, setCustomCategory] = useState(() => {
+    if (!existingNote?.category) return '';
+    return DEFAULT_CATEGORIES.includes(existingNote.category) ? '' : existingNote.category;
+  });
+  const [status, setStatus] = useState(() => existingNote?.status || 'in-progress');
+  const [readingTime, setReadingTime] = useState(() => existingNote?.readingTime || '5 min read');
+  const [tagsInput, setTagsInput] = useState(() => (existingNote?.tags ? existingNote.tags.join(', ') : 'Interpretability, Neural Dynamics'));
+  const [summary, setSummary] = useState(() => existingNote?.summary || '');
+  const [mathSample, setMathSample] = useState(() => existingNote?.mathSample || '$$ \\mathcal{L} = \\|x - \\hat{x}\\|^2_2 $$');
+  const [content, setContent] = useState(() => existingNote?.content || `## 1. Abstract & Motivation
 
 Describe the theoretical motivation, scientific intuition, and research questions under investigation.
 
@@ -68,13 +79,15 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
   // Auto-generate slug from title if user hasn't explicitly edited slug
   const handleTitleChange = (val) => {
     setTitle(val);
-    const generated = val
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/[\s_-]+/g, '-')
-      .replace(/^-+|-+$/g, '');
-    setSlug(generated);
+    if (!isEditing) {
+      const generated = val
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      setSlug(generated);
+    }
   };
 
   const insertSnippet = (snippet) => {
@@ -119,7 +132,7 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
 
     const success = saveUserNote(currentNoteObject);
     if (success) {
-      setToastMessage('Research note saved! Opening note...');
+      setToastMessage(isEditing ? 'Research note updated! Opening note...' : 'Research note saved! Opening note...');
       setTimeout(() => {
         navigate(`/research/${slug}`);
       }, 700);
@@ -131,7 +144,7 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
   return (
     <div className="page-wrapper">
       <Helmet>
-        <title>{`Write Research Note — ${siteConfig.brandName}`}</title>
+        <title>{`${isEditing ? 'Edit' : 'Write'} Research Note — ${siteConfig.brandName}`}</title>
       </Helmet>
 
       {/* Top action navigation */}
@@ -153,7 +166,7 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
               className={styles.primaryBtn}
               onClick={handleSave}
             >
-              Publish &amp; View Note →
+              {isEditing ? 'Update & View Note →' : 'Publish & View Note →'}
             </button>
           </div>
         </div>
@@ -162,7 +175,7 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
       <div className={`container ${styles.container}`}>
         <header className={styles.pageHeader}>
           <span className={styles.preTitle}>Laboratory Notebook Composer</span>
-          <h1 className={styles.title}>Compose New Research Note</h1>
+          <h1 className={styles.title}>{isEditing ? `Edit: ${title || 'Research Note'}` : 'Compose New Research Note'}</h1>
           <p className={styles.desc}>
             Write your scientific formulation, embed experimental figures/videos from <code>public/media/</code>,
             and preview LaTeX math expressions in real time.
@@ -405,7 +418,7 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
             <div className={detailStyles.markdownBody}>
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex, rehypeHighlight]}
+                rehypePlugins={[rehypeRaw, rehypeKatex, rehypeHighlight]}
                 components={{
                   p: ({ node, children, ...props }) => {
                     const hasBlockElement =

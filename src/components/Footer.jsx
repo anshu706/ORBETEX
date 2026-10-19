@@ -40,10 +40,18 @@ export default function Footer() {
           <nav aria-label="External links">
             <h3 className={styles.colTitle}>Connect</h3>
             <ul role="list">
-              <li><a href={siteConfig.links.googleScholar} className={styles.footerLink} target="_blank" rel="noopener noreferrer">Google Scholar</a></li>
-              <li><a href={siteConfig.links.github}        className={styles.footerLink} target="_blank" rel="noopener noreferrer">GitHub</a></li>
-              <li><a href={siteConfig.links.linkedin}      className={styles.footerLink} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-              <li><a href={`mailto:${siteConfig.email}`}   className={styles.footerLink}>Email</a></li>
+              {siteConfig.links.googleScholar && (
+                <li><a href={siteConfig.links.googleScholar} className={styles.footerLink} target="_blank" rel="noopener noreferrer">Google Scholar</a></li>
+              )}
+              {siteConfig.links.github && (
+                <li><a href={siteConfig.links.github} className={styles.footerLink} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              )}
+              {siteConfig.links.linkedin && (
+                <li><a href={siteConfig.links.linkedin} className={styles.footerLink} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+              )}
+              {siteConfig.email && (
+                <li><a href={`mailto:${siteConfig.email}`} className={styles.footerLink}>Email</a></li>
+              )}
             </ul>
           </nav>
 
