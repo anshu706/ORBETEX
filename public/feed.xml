@@ -5,58 +5,7 @@
     <link>https://anshu706.github.io/Orbetex</link>
     <description>Personal research hub publishing scientific research notes, preprints, and findings in ML, NLP, and cognitive systems.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Oct 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://anshu706.github.io/Orbetex/feed.xml" rel="self" type="application/rss+xml"/>
-
-    <item>
-      <title>Latent Geometry &amp; Monosemanticity in Sparse Autoencoders</title>
-      <link>https://anshu706.github.io/Orbetex/research/sparse-autoencoders-latent-geometry</link>
-      <guid isPermaLink="true">https://anshu706.github.io/Orbetex/research/sparse-autoencoders-latent-geometry</guid>
-      <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
-      <author>anshupadhayay212@gmail.com (Anshu Upadhyay)</author>
-      <category>Neural Network Interpretability</category>
-      <description>Investigating how dictionary learning across large language model residual streams reveals polysemantic superposition and orthogonal geometric sub-manifolds.</description>
-    </item>
-
-    <item>
-      <title>Continuous Attractor Dynamics in Human &amp; Machine Working Memory</title>
-      <link>https://anshu706.github.io/Orbetex/research/cognitive-dynamics-working-memory</link>
-      <guid isPermaLink="true">https://anshu706.github.io/Orbetex/research/cognitive-dynamics-working-memory</guid>
-      <pubDate>Sun, 02 Aug 2026 00:00:00 GMT</pubDate>
-      <author>anshupadhayay212@gmail.com (Anshu Upadhyay)</author>
-      <category>Cognitive Science</category>
-      <description>A comparative study of line and ring attractors in prefrontal cortex neural manifolds versus state-space and recurrent attention networks.</description>
-    </item>
-
-    <item>
-      <title>Mechanistic Decomposition of Multi-Step Induction Heads</title>
-      <link>https://anshu706.github.io/Orbetex/research/transformer-circuits-inductive-heads</link>
-      <guid isPermaLink="true">https://anshu706.github.io/Orbetex/research/transformer-circuits-inductive-heads</guid>
-      <pubDate>Fri, 19 Jun 2026 00:00:00 GMT</pubDate>
-      <author>anshupadhayay212@gmail.com (Anshu Upadhyay)</author>
-      <category>Natural Language Processing</category>
-      <description>Dissecting 2-layer and 3-layer composition circuits responsible for in-context pattern completion and algorithmic copy-pasting.</description>
-    </item>
-
-    <item>
-      <title>Energy-Based Latent Variable Models for Causal Discovery</title>
-      <link>https://anshu706.github.io/Orbetex/research/energy-based-causal-inference</link>
-      <guid isPermaLink="true">https://anshu706.github.io/Orbetex/research/energy-based-causal-inference</guid>
-      <pubDate>Sat, 11 Apr 2026 00:00:00 GMT</pubDate>
-      <author>anshupadhayay212@gmail.com (Anshu Upadhyay)</author>
-      <category>Machine Learning</category>
-      <description>Formulating structural causal models as parameterized continuous Gibbs distributions to discover directed acyclic graphs without combinatorial search.</description>
-    </item>
-
-    <item>
-      <title>Matrix Product States &amp; the Expressive Power of Quantum Tensor Networks</title>
-      <link>https://anshu706.github.io/Orbetex/research/quantum-tensor-networks-expressivity</link>
-      <guid isPermaLink="true">https://anshu706.github.io/Orbetex/research/quantum-tensor-networks-expressivity</guid>
-      <pubDate>Wed, 18 Feb 2026 00:00:00 GMT</pubDate>
-      <author>anshupadhayay212@gmail.com (Anshu Upadhyay)</author>
-      <category>Quantum Computing</category>
-      <description>Investigating the boundaries between classically simulable matrix product states and quantum circuit supremacy in parameterized machine learning.</description>
-    </item>
-
   </channel>
 </rss>

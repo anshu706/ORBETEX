@@ -92,46 +92,61 @@ export default function Home() {
               <span className={styles.sectionPre}>Working Notebook</span>
               <h2 className={styles.sectionTitle}>Featured Research Notes</h2>
             </div>
-            <Link to="/research" className={styles.sectionLink}>
-              View all notes ({allNotes.length}) →
-            </Link>
+            {allNotes.length > 0 && (
+              <Link to="/research" className={styles.sectionLink}>
+                View all notes ({allNotes.length}) →
+              </Link>
+            )}
           </div>
 
-          <div className={styles.cardsGrid}>
-            {featuredNotes.map(note => (
-              <article key={note.id} className={styles.noteCard}>
-                <div className={styles.noteTop}>
-                  <StatusBadge status={note.status} />
-                  <span className={styles.noteMeta}>{note.readingTime} · {note.date}</span>
-                </div>
-
-                <h3 className={styles.noteTitle}>
-                  <Link to={`/research/${note.slug}`}>{note.title}</Link>
-                </h3>
-
-                <p className={styles.noteSummary}>{note.summary}</p>
-
-                {note.mathSample && (
-                  <div className={styles.noteMathPreview}>
-                    <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
-                      {note.mathSample}
-                    </ReactMarkdown>
+          {featuredNotes.length > 0 ? (
+            <div className={styles.cardsGrid}>
+              {featuredNotes.map(note => (
+                <article key={note.id} className={styles.noteCard}>
+                  <div className={styles.noteTop}>
+                    <StatusBadge status={note.status} />
+                    <span className={styles.noteMeta}>{note.readingTime} · {note.date}</span>
                   </div>
-                )}
 
-                <div className={styles.cardFooter}>
-                  <div className={styles.tagsRow}>
-                    {(note.tags || []).slice(0, 3).map(tag => (
-                      <TagChip key={tag} tag={tag} />
-                    ))}
+                  <h3 className={styles.noteTitle}>
+                    <Link to={`/research/${note.slug}`}>{note.title}</Link>
+                  </h3>
+
+                  <p className={styles.noteSummary}>{note.summary}</p>
+
+                  {note.mathSample && (
+                    <div className={styles.noteMathPreview}>
+                      <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                        {note.mathSample}
+                      </ReactMarkdown>
+                    </div>
+                  )}
+
+                  <div className={styles.cardFooter}>
+                    <div className={styles.tagsRow}>
+                      {(note.tags || []).slice(0, 3).map(tag => (
+                        <TagChip key={tag} tag={tag} />
+                      ))}
+                    </div>
+                    <Link to={`/research/${note.slug}`} className={styles.readLink} aria-label={`Read note: ${note.title}`}>
+                      Read note →
+                    </Link>
                   </div>
-                  <Link to={`/research/${note.slug}`} className={styles.readLink} aria-label={`Read note: ${note.title}`}>
-                    Read note →
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>📝</div>
+              <h3 className={styles.emptyTitle}>No research notes published yet</h3>
+              <p className={styles.emptyText}>
+                Your working notebook is initialized. Compose and publish findings, interactive figures, and LaTeX formulations.
+              </p>
+              <Link to="/research/new" className={styles.emptyBtn}>
+                + Write Research Note
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

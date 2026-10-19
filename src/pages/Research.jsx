@@ -134,127 +134,142 @@ export default function Research() {
 
       <section className={styles.contentSection}>
         <div className="container">
-          {/* Filter bars */}
-          <div className={styles.filtersBar}>
-            {/* Category tabs */}
-            <div className={styles.categoryPills}>
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  className={`${styles.filterPill} ${currentCategory === cat ? styles.activePill : ''}`}
-                  onClick={() => updateFilter('category', cat)}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            {/* Status dropdown & active tag indicator */}
-            <div className={styles.secondaryFilters}>
-              <div className={styles.statusSelectWrapper}>
-                <label htmlFor="status-select" className={styles.statusLabel}>Status:</label>
-                <select
-                  id="status-select"
-                  className={styles.statusSelect}
-                  value={currentStatus}
-                  onChange={e => updateFilter('status', e.target.value)}
-                >
-                  <option value="All">All Stages</option>
-                  <option value="published">Published</option>
-                  <option value="preprint">Preprint</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="idea">Idea</option>
-                </select>
-              </div>
-
-              {currentTag && (
-                <div className={styles.activeTagPill}>
-                  <span>Tag: <strong>#{currentTag}</strong></span>
-                  <button onClick={() => updateFilter('tag', null)} aria-label="Remove tag filter">×</button>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Tag cloud bar */}
-          <div className={styles.tagCloudBar}>
-            <span className={styles.tagCloudLabel}>Popular Tags:</span>
-            <div className={styles.tagChips}>
-              {allTags.slice(0, 10).map(([tag, count]) => (
-                <button
-                  key={tag}
-                  className={`${styles.tagButton} ${currentTag === tag ? styles.activeTagButton : ''}`}
-                  onClick={() => updateFilter('tag', currentTag === tag ? null : tag)}
-                >
-                  #{tag} <span className={styles.tagCount}>({count})</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Results count & clear */}
-          <div className={styles.resultsMeta}>
-            <span>Showing <strong>{filteredNotes.length}</strong> of {notesList.length} research notes</span>
-            {(currentCategory !== 'All' || currentStatus !== 'All' || currentTag || searchQuery) && (
-              <button className={styles.resetBtn} onClick={clearAllFilters}>
-                Reset all filters
-              </button>
-            )}
-          </div>
-
-          {/* Notes Grid */}
-          {filteredNotes.length > 0 ? (
-            <div className={styles.notesGrid}>
-              {filteredNotes.map(note => (
-                <article key={note.id} className={styles.noteCard}>
-                  <div className={styles.cardHeader}>
-                    <StatusBadge status={note.status} />
-                    <span className={styles.cardMeta}>{note.readingTime} · {note.date}</span>
-                  </div>
-
-                  <span className={styles.noteCategory}>{note.category}</span>
-
-                  <h2 className={styles.noteTitle}>
-                    <Link to={`/research/${note.slug}`}>{note.title}</Link>
-                  </h2>
-
-                  <p className={styles.noteSummary}>{note.summary}</p>
-
-                  {note.mathSample && (
-                    <div className={styles.mathBlock}>
-                      <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
-                        {note.mathSample}
-                      </ReactMarkdown>
-                    </div>
-                  )}
-
-                  <div className={styles.cardFooter}>
-                    <div className={styles.tagsContainer}>
-                      {(note.tags || []).map(tag => (
-                        <TagChip
-                          key={tag}
-                          tag={tag}
-                          active={currentTag === tag}
-                          onClick={() => updateFilter('tag', currentTag === tag ? null : tag)}
-                        />
-                      ))}
-                    </div>
-                    <Link to={`/research/${note.slug}`} className={styles.readBtn}>
-                      Read Full Note →
-                    </Link>
-                  </div>
-                </article>
-              ))}
+          {notesList.length === 0 ? (
+            <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>📝</div>
+              <h3>No research notes published yet</h3>
+              <p>Your research notebook is ready. Start composing and publishing your findings, preprints, and working hypotheses.</p>
+              <Link to="/research/new" className={styles.clearFiltersBtn} style={{ textDecoration: 'none', display: 'inline-block' }}>
+                + Compose First Research Note
+              </Link>
             </div>
           ) : (
-            <div className={styles.emptyState}>
-              <div className={styles.emptyIcon}>🔍</div>
-              <h3>No research notes match your criteria</h3>
-              <p>Try clearing your active filters or searching for broader terms.</p>
-              <button className={styles.clearFiltersBtn} onClick={clearAllFilters}>
-                Clear All Filters
-              </button>
-            </div>
+            <>
+              {/* Filter bars */}
+              <div className={styles.filtersBar}>
+                {/* Category tabs */}
+                <div className={styles.categoryPills}>
+                  {categories.map(cat => (
+                    <button
+                      key={cat}
+                      className={`${styles.filterPill} ${currentCategory === cat ? styles.activePill : ''}`}
+                      onClick={() => updateFilter('category', cat)}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Status dropdown & active tag indicator */}
+                <div className={styles.secondaryFilters}>
+                  <div className={styles.statusSelectWrapper}>
+                    <label htmlFor="status-select" className={styles.statusLabel}>Status:</label>
+                    <select
+                      id="status-select"
+                      className={styles.statusSelect}
+                      value={currentStatus}
+                      onChange={e => updateFilter('status', e.target.value)}
+                    >
+                      <option value="All">All Stages</option>
+                      <option value="published">Published</option>
+                      <option value="preprint">Preprint</option>
+                      <option value="in-progress">In Progress</option>
+                      <option value="idea">Idea</option>
+                    </select>
+                  </div>
+
+                  {currentTag && (
+                    <div className={styles.activeTagPill}>
+                      <span>Tag: <strong>#{currentTag}</strong></span>
+                      <button onClick={() => updateFilter('tag', null)} aria-label="Remove tag filter">×</button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Tag cloud bar */}
+              {allTags.length > 0 && (
+                <div className={styles.tagCloudBar}>
+                  <span className={styles.tagCloudLabel}>Popular Tags:</span>
+                  <div className={styles.tagChips}>
+                    {allTags.slice(0, 10).map(([tag, count]) => (
+                      <button
+                        key={tag}
+                        className={`${styles.tagButton} ${currentTag === tag ? styles.activeTagButton : ''}`}
+                        onClick={() => updateFilter('tag', currentTag === tag ? null : tag)}
+                      >
+                        #{tag} <span className={styles.tagCount}>({count})</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Results count & clear */}
+              <div className={styles.resultsMeta}>
+                <span>Showing <strong>{filteredNotes.length}</strong> of {notesList.length} research notes</span>
+                {(currentCategory !== 'All' || currentStatus !== 'All' || currentTag || searchQuery) && (
+                  <button className={styles.resetBtn} onClick={clearAllFilters}>
+                    Reset all filters
+                  </button>
+                )}
+              </div>
+
+              {/* Notes Grid */}
+              {filteredNotes.length > 0 ? (
+                <div className={styles.notesGrid}>
+                  {filteredNotes.map(note => (
+                    <article key={note.id} className={styles.noteCard}>
+                      <div className={styles.cardHeader}>
+                        <StatusBadge status={note.status} />
+                        <span className={styles.cardMeta}>{note.readingTime} · {note.date}</span>
+                      </div>
+
+                      <span className={styles.noteCategory}>{note.category}</span>
+
+                      <h2 className={styles.noteTitle}>
+                        <Link to={`/research/${note.slug}`}>{note.title}</Link>
+                      </h2>
+
+                      <p className={styles.noteSummary}>{note.summary}</p>
+
+                      {note.mathSample && (
+                        <div className={styles.mathBlock}>
+                          <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                            {note.mathSample}
+                          </ReactMarkdown>
+                        </div>
+                      )}
+
+                      <div className={styles.cardFooter}>
+                        <div className={styles.tagsContainer}>
+                          {(note.tags || []).map(tag => (
+                            <TagChip
+                              key={tag}
+                              tag={tag}
+                              active={currentTag === tag}
+                              onClick={() => updateFilter('tag', currentTag === tag ? null : tag)}
+                            />
+                          ))}
+                        </div>
+                        <Link to={`/research/${note.slug}`} className={styles.readBtn}>
+                          Read Full Note →
+                        </Link>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.emptyState}>
+                  <div className={styles.emptyIcon}>🔍</div>
+                  <h3>No research notes match your criteria</h3>
+                  <p>Try clearing your active filters or searching for broader terms.</p>
+                  <button className={styles.clearFiltersBtn} onClick={clearAllFilters}>
+                    Clear All Filters
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
