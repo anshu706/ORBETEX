@@ -8,7 +8,7 @@ export const siteConfig = {
   tagline: "Exploring the Intersection of Machine Learning, Cognition & Physical Systems",
 
   // Owner
-  name: "Anshu Upadhyay",
+  name: "Ansh Upadhayay",
   title: "AI Researcher & Systems Engineer",
   shortBio:
     "Researcher exploring the mathematical and mechanistic foundations of artificial intelligence, neural interpretability, cognitive attractor dynamics, and low-power hardware systems.",
