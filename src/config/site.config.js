@@ -31,8 +31,7 @@ export const siteConfig = {
   // Academic & Social Links
   links: {
     github: "https://github.com/anshu706",
-    linkedin: "https://www.linkedin.com/in/ansh-upadhayay-011b77310/",
-    googleScholar: "https://scholar.google.com"
+    linkedin: "https://www.linkedin.com/in/ansh-upadhayay-011b77310/"
   },
 
   // Site metadata

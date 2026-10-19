@@ -164,13 +164,7 @@ export default function About() {
                 {siteConfig.links.linkedin && (
                   <>
                     <dt>LinkedIn</dt>
-                    <dd><a href={siteConfig.links.linkedin} target="_blank" rel="noopener noreferrer">Profile</a></dd>
-                  </>
-                )}
-                {siteConfig.links.googleScholar && (
-                  <>
-                    <dt>Scholar</dt>
-                    <dd><a href={siteConfig.links.googleScholar} target="_blank" rel="noopener noreferrer">Google Scholar</a></dd>
+                    <dd><a href={siteConfig.links.linkedin} target="_blank" rel="noopener noreferrer">@ansh-upadhayay</a></dd>
                   </>
                 )}
               </dl>

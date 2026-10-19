@@ -14,14 +14,6 @@ import TagChip from '../components/TagChip';
 import detailStyles from './ResearchDetail.module.css';
 import styles from './NewResearchNote.module.css';
 
-const DEFAULT_CATEGORIES = [
-  'Neural Network Interpretability',
-  'Cognitive Science',
-  'Natural Language Processing',
-  'Machine Learning',
-  'Quantum Computing',
-  'Autonomous Hardware & RF'
-];
 
 export default function NewResearchNote() {
   const navigate = useNavigate();
@@ -34,14 +26,7 @@ export default function NewResearchNote() {
   const [slug, setSlug] = useState(() => existingNote?.slug || '');
   const [noteDate] = useState(() => existingNote?.date || new Date().toISOString().split('T')[0]);
   const [noteYear] = useState(() => new Date().getFullYear());
-  const [category, setCategory] = useState(() => {
-    if (!existingNote?.category) return DEFAULT_CATEGORIES[0];
-    return DEFAULT_CATEGORIES.includes(existingNote.category) ? existingNote.category : 'Custom';
-  });
-  const [customCategory, setCustomCategory] = useState(() => {
-    if (!existingNote?.category) return '';
-    return DEFAULT_CATEGORIES.includes(existingNote.category) ? '' : existingNote.category;
-  });
+  const [category, setCategory] = useState(() => existingNote?.category || '');
   const [status, setStatus] = useState(() => existingNote?.status || 'in-progress');
   const [readingTime, setReadingTime] = useState(() => existingNote?.readingTime || '5 min read');
   const [tagsInput, setTagsInput] = useState(() => (existingNote?.tags ? existingNote.tags.join(', ') : 'Interpretability, Neural Dynamics'));
@@ -101,7 +86,7 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
       .filter(Boolean);
   };
 
-  const currentCategory = category === 'Custom' ? customCategory : category;
+  const currentCategory = category;
 
   const currentNoteObject = {
     id: slug || 'draft-note',
@@ -238,26 +223,13 @@ def compute_drift(states: torch.Tensor) -> torch.Tensor:
             <div className={styles.fieldRow}>
               <div className={styles.fieldGroup}>
                 <label className={styles.label}>Research Category</label>
-                <select
-                  className={styles.select}
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="e.g. Neural Network Interpretability"
                   value={category}
                   onChange={e => setCategory(e.target.value)}
-                >
-                  {DEFAULT_CATEGORIES.map(c => (
-                    <option key={c} value={c}>{c}</option>
-                  ))}
-                  <option value="Custom">+ Custom Category...</option>
-                </select>
-                {category === 'Custom' && (
-                  <input
-                    type="text"
-                    className={styles.input}
-                    placeholder="Enter custom category"
-                    value={customCategory}
-                    onChange={e => setCustomCategory(e.target.value)}
-                    style={{ marginTop: '6px' }}
-                  />
-                )}
+                />
               </div>
 
               <div className={styles.fieldGroup}>
