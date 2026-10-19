@@ -55,13 +55,6 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <div>
-            <h3 className={styles.colTitle}>Feeds</h3>
-            <ul role="list">
-              <li><a href="/feed.xml"    className={styles.footerLink} target="_blank" rel="noopener noreferrer">RSS Feed</a></li>
-              <li><a href="/sitemap.xml" className={styles.footerLink} target="_blank" rel="noopener noreferrer">Sitemap</a></li>
-            </ul>
-          </div>
         </div>
       </div>
 
@@ -70,9 +63,7 @@ export default function Footer() {
           &copy; {YEAR} {siteConfig.name || 'Orbetex'}. Built with{' '}
           <span aria-label="love">♥</span> using React &amp; Vite.
         </p>
-        <p className={styles.disclaimer}>
-          All research content on this site is the work of the listed authors.
-        </p>
+
       </div>
     </footer>
   );
